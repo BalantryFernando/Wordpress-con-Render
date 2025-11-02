@@ -1,12 +1,17 @@
 FROM wordpress:latest
 
-# Instala la extensión de PHP para PostgreSQL
-RUN docker-php-ext-install pdo pdo_pgsql
+# 1. Actualiza, instala las dependencias de C (libpq-dev)
+# 2. Instala la extensión de PHP (pdo_pgsql)
+# 3. Limpia la caché de apt
+RUN apt-get update && apt-get install -y \
+    libpq-dev \
+    && docker-php-ext-install pdo pdo_pgsql \
+    && rm -rf /var/lib/apt/lists/*
 
-# 1. Copia la carpeta INTERNA (pg4wp) al directorio de plugins
+# Copia el plugin de PG4WP (la carpeta interna)
 COPY postgresql-for-wordpress/pg4wp /var/www/html/wp-content/plugins/pg4wp
 
-# 2. Copia el archivo 'db.php' desde la subcarpeta correcta
+# Copia el archivo "drop-in" (db.php)
 COPY postgresql-for-wordpress/pg4wp/db.php /var/www/html/wp-content/db.php
 
 EXPOSE 80
