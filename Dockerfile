@@ -13,4 +13,3 @@ COPY postgresql-for-wordpress /var/www/html/wp-content/plugins/postgresql-for-wo
 COPY postgresql-for-wordpress/db.php /var/www/html/wp-content/db.php
 
 EXPOSE 80
-# DEPLOYEA COÑOOOO
