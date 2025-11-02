@@ -1,10 +1,12 @@
 FROM wordpress:latest
 
-# 1. Actualiza, instala las dependencias de C (libpq-dev)
-# 2. Instala la extensión PDO y su driver PGSQL
+# 1. Instala dependencias C (libpq-dev)
+# 2. Compila e INSTALA la extensión (pdo y pdo_pgsql)
+# 3. HABILITA la extensión de PostgreSQL
 RUN apt-get update && apt-get install -y \
     libpq-dev \
     && docker-php-ext-install pdo pdo_pgsql \
+    && docker-php-ext-enable pdo_pgsql \
     && rm -rf /var/lib/apt/lists/*
 
 # Copia el plugin de PG4WP (la carpeta interna)
