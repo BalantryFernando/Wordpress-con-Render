@@ -6,10 +6,10 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-install pdo pdo_pgsql pgsql \
     && rm -rf /var/lib/apt/lists/*
 
-# 2. Copia la carpeta COMPLETA del plugin
+# 2. Copia la carpeta (la que acabamos de copiar con 'cp -r')
 COPY postgresql-for-wordpress /var/www/html/wp-content/plugins/postgresql-for-wordpress
 
-# 3. Copia el archivo "drop-in" (db.php)
+# 3. Copia el "drop-in" (desde esa misma carpeta)
 COPY postgresql-for-wordpress/db.php /var/www/html/wp-content/db.php
 
 EXPOSE 80
